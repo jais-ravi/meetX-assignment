@@ -162,7 +162,7 @@ This collection contains all the necessary API requests for the “Basic Activit
 
 ### **5\. Get My Bookings API (Protected)**
 
-**Endpoint:** GET /api/bookings/me
+**Endpoint:** GET /api/bookings
 
 **Description:** Returns a list of all bookings made by the logged-in user.
 
