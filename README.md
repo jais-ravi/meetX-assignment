@@ -1,249 +1,237 @@
-Here is the updated README.md for your GitHub project meetX-assignment with complete API documentation including JSON request/response examples, base URLs, and port info:
+# **📘 Postman Collection for Basic Activity Booking App**
 
-⸻
-
-
-# 🏏 MeetX - Activity Booking App (Backend API)
-
-This is the backend API for the **MeetX Basic Activity Booking App**, developed using **Node.js**, **Express**, and **MongoDB**. It supports user authentication, activity listing, booking, and fetching personal bookings.
+This collection contains all the necessary API requests for the “Basic Activity Booking App” backend as part of the **MeetX Backend Developer Internship** assignment.
 
 ---
 
-## 🌐 Hosted URL
+## **🌐 URLs**
 
-**Live API Base URL:**  
-[`https://meetx-assignment-cjkj.onrender.com`](https://meetx-assignment-cjkj.onrender.com)
-
-**Localhost Port:**  
-`http://localhost:8000`
-
----
-
-## 🛠 Tech Stack
-
-- **Backend**: Node.js, Express.js  
-- **Database**: MongoDB + Mongoose  
-- **Authentication**: JWT (stored in HTTP-only cookies)  
-- **Validation**: express-validator  
-- **Password Hashing**: bcryptjs  
-- **API Testing**: Postman
+- **Live API URL**: [https://meetx-assignment-cjkj.onrender.com](https://meetx-assignment-cjkj.onrender.com)
+    
+- **GitHub Repository**: [https://github.com/jais-ravi/meetX-assignment.git](https://github.com/jais-ravi/meetX-assignment.git)
+    
 
 ---
 
-## 📦 Folder Structure
+## **🔧 API Endpoints**
 
-/controllers
-/models
-/routes
-/middlewares
-/config
-server.js
+### **1\. User Registration API**
 
----
+**Endpoint:** POST /api/auth/register
 
-## 📋 API Endpoints
+**Description:** Registers a new user with name, email, phone, and password. The password is hashed using bcrypt before storing in the database.
 
----
+#### **Request Body:**
 
-### **1. Register User**
-
-**Endpoint:** `POST /api/auth/register`  
-**Description:** Registers a new user.
-
-#### ✅ Request Body:
-
-```json
+``` json
 {
   "name": "John Doe",
   "email": "johndoe@example.com",
-  "phone": "1234567890",
+  "phone": "9876543210",
   "password": "strongpassword"
 }
 
-✅ Success Response:
+ ```
 
+#### **Success Response:**
+
+``` json
 {
-  "_id": "660ef77d...",
+  "_id": "65f12345abc123abc123abc1",
   "name": "John Doe",
   "email": "johndoe@example.com",
-  "phone": "1234567890"
+  "phone": "9876543210"
 }
 
-❌ Error:
+ ```
 
-{ "message": "User already exists" }
+> Sets a token cookie (HttpOnly, Max-Age: 1 day) 
+  
 
+#### **Error Response:**
 
-⸻
+``` json
+{ "message": "Email already registered" }
 
-2. Login User
+ ```
 
-Endpoint: POST /api/auth/login
-Description: Authenticates user and sets JWT token in HTTP-only cookie.
+---
 
-✅ Request Body:
+### **2\. User Login API**
 
+**Endpoint:** POST /api/auth/login
+
+**Description:** Logs in an existing user. Accepts email and password, and returns a JWT token. The token is stored as an HTTP-only cookie.
+
+#### **Request Body:**
+
+``` json
 {
   "email": "johndoe@example.com",
   "password": "strongpassword"
 }
 
-✅ Success Response:
+ ```
 
+#### **Success Response:**
+
+``` json
 {
-  "_id": "660ef77d...",
+  "_id": "65f12345abc123abc123abc1",
   "name": "John Doe",
   "email": "johndoe@example.com",
-  "phone": "1234567890"
+  "phone": "9876543210"
 }
 
-✅ Sets cookie:
+ ```
 
-token=jwt_token; HttpOnly; Max-Age=86400
+> Sets a token cookie (HttpOnly) 
+  
 
-❌ Error:
+#### **Error Response:**
 
+``` json
 { "message": "Invalid credentials" }
 
+ ```
 
-⸻
+---
 
-3. List All Activities (Public)
+### **3\. List Activities API (Public)**
 
-Endpoint: GET /api/activities
-Description: Returns a list of all available activities.
+**Endpoint:** GET /api/activities
 
-✅ Response:
+**Description:** Returns a list of available activities such as cricket, movies, football matches, etc.
 
+#### **Success Response:**
+
+``` json
 [
   {
-    "_id": "6610be...",
-    "title": "Football Match",
-    "description": "Friendly football match at local stadium",
-    "location": "City Stadium",
-    "date": "2025-05-20T00:00:00.000Z",
-    "time": "17:00"
+    "_id": "65fabc12abc123abc123abc1",
+    "title": "Cricket Match",
+    "description": "Local tournament final",
+    "location": "Stadium A",
+    "date": "2025-05-12",
+    "time": "16:00"
   },
-  ...
-]
-
-
-⸻
-
-4. Book an Activity (Protected)
-
-Endpoint: POST /api/bookings
-Description: Allows logged-in users to book an activity.
-
-✅ Requires authentication (JWT cookie).
-
-✅ Request Body:
-
-{
-  "activityId": "6610be4e..."
-}
-
-✅ Success Response:
-
-{
-  "_id": "6610c04f...",
-  "user": "660ef77d...",
-  "activity": "6610be4e...",
-  "createdAt": "2025-05-10T..."
-}
-
-❌ Errors:
-
-{ "message": "Activity not found" }
-
-
-⸻
-
-5. Get My Bookings (Protected)
-
-Endpoint: GET /api/bookings/me
-Description: Fetch all bookings made by the logged-in user.
-
-✅ Requires authentication (JWT cookie).
-
-✅ Success Response:
-
-[
   {
-    "_id": "6610c04f...",
-    "activity": {
-      "_id": "6610be4e...",
-      "title": "Football Match",
-      "description": "Friendly match",
-      "location": "Stadium",
-      "date": "2025-05-20T00:00:00.000Z",
-      "time": "17:00"
-    }
+    "_id": "65fabc34abc123abc123abc2",
+    "title": "Movie Night",
+    "description": "Watch 'Inception' under the stars",
+    "location": "Open Air Theater",
+    "date": "2025-05-15",
+    "time": "20:00"
   }
 ]
 
-❌ If no bookings:
-
-{ "message": "No bookings found" }
-
-
-⸻
-
-🔐 Authentication & Cookies
-	•	JWT is stored in HTTP-only cookie
-	•	Cookie is set on login and cleared on logout
-	•	Secure routes check for valid token via middleware
-
-⸻
-
-📮 Postman Collection
-
-✅ A complete Postman Collection is included in the repo as MeetX.postman_collection.json.
-
-⸻
-
-🚀 Getting Started Locally
-
-Clone the repo:
-
-git clone https://github.com/jais-ravi/meetX-assignment.git
-cd meetX-assignment
-
-Install dependencies:
-
-npm install
-
-Set up .env:
-
-MONGODB_URI=your_mongo_uri
-JWT_SECRET=your_secret_key
-
-Start the server:
-
-npm run dev
-# Runs on http://localhost:8000
-
-
-⸻
-
-🧪 Test the API
-	1.	Import Postman Collection (MeetX.postman_collection.json)
-	2.	Use http://localhost:8000 or https://meetx-assignment-cjkj.onrender.com as base URL
-	3.	Test each endpoint
-
-⸻
-
-👨‍💻 Author
-
-Ravi Jaiswal
-GitHub Profile
-
-⸻
-
-📜 License
-
-This project is part of a hiring assignment for MeetX - Altrodav Technologies Pvt. Ltd..
+ ```
 
 ---
 
-Let me know if you'd like me to generate a `MeetX.postman_collection.json` file based on this.
+### **4\. Book an Activity API (Protected)**
+
+**Endpoint:** POST /api/bookings
+
+**Description:** Books an activity for the logged-in user by providing the activityId. User must be authenticated (JWT token required).
+
+#### **Request Body:**
+
+``` json
+{
+  "activityId": "65fabc12abc123abc123abc1"
+}
+
+ ```
+
+#### **Success Response:**
+
+``` json
+{ "message": "Activity booked successfully" }
+
+ ```
+
+#### **Error Response:**
+
+``` json
+{ "message": "Activity not found" }
+
+ ```
+
+---
+
+### **5\. Get My Bookings API (Protected)**
+
+**Endpoint:** GET /api/bookings/me
+
+**Description:** Returns a list of all bookings made by the logged-in user.
+
+#### **Success Response:**
+
+``` json
+[
+  {
+    "_id": "65faccccabc123abc123aaa1",
+    "user": "65f12345abc123abc123abc1",
+    "activity": {
+      "_id": "65fabc12abc123abc123abc1",
+      "title": "Cricket Match",
+      "location": "Stadium A",
+      "date": "2025-05-12",
+      "time": "16:00"
+    },
+    "bookedAt": "2025-05-10T12:30:00.000Z"
+  }
+]
+
+ ```
+
+#### **Error Response:**
+
+``` json
+{ "message": "Unauthorized" }
+
+ ```
+
+---
+
+## **🔑 Authentication Details**
+
+- **JWT Token**: The token is generated during login or registration and is stored in an **HTTP-only cookie**.
+    
+- **Protected Routes**: /api/bookings and /api/bookings/me require a valid cookie (JWT).
+    
+
+---
+
+## **📦 Submission Checklist**
+
+- ✅ GitHub Repository: [https://github.com/jais-ravi/meetX-assignment.git](https://github.com/jais-ravi/meetX-assignment.git)
+    
+- ✅ Postman Collection: _(attached with submission)_
+    
+- ✅ Live API URL: [https://meetx-assignment-cjkj.onrender.com](https://meetx-assignment-cjkj.onrender.com)
+    
+
+---
+
+## **🧪 Testing in Postman**
+
+1. **Set the Base URL:**
+    
+    Use either [http://localhost:8000](http://localhost:8000) for local or the live Render URL in your Postman environment.
+    
+2. **Login to Get JWT Token:**
+    
+    Send a request to the login endpoint. The token will be stored in cookies.
+    
+3. **Access Protected Routes:**
+    
+    Once logged in, you can test protected APIs (like booking and fetching user bookings) as long as your Postman is set to **retain cookies**.
+    
+
+---
+
+## **📝 Conclusion**
+
+This collection documents the full backend API flow for the “Basic Activity Booking App,” including user authentication, public activity listing, and private activity booking. Use the provided endpoints in Postman for easy testing and validation.
